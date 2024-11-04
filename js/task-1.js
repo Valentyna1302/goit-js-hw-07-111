@@ -64,17 +64,26 @@ const images = [
   },
 ];
 
-const gallery = document.querySelectorAll("gallery-item");
+const gallery = document.querySelector(".gallery");
 
-const instance = basicLightbox.create(
-  `
-	<h1>Not closable</h1>
-	<p>It's not possible to close this lightbox with a click.</p>
-`,
-  {
-    closable: false,
-  }
-);
+images.forEach(({ preview, original, description }) => {
+  const list = document.createElement("li");
+  list.classList.add("gallery-item");
 
-instance.show();
-instance.close();
+  const link = document.createElement("a");
+  link.classList.add("gallery-link");
+  link.href = original;
+
+  const img = document.createElement("img");
+  img.classList.add("gallery-image");
+  img.src = preview;
+  img.alt = description;
+  img.dataset.source = original;
+  link.append(img);
+  list.append(link);
+  gallery.append(list);
+
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+  });
+});
