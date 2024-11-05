@@ -79,11 +79,23 @@ images.forEach(({ preview, original, description }) => {
   img.src = preview;
   img.alt = description;
   img.dataset.source = original;
+
   link.append(img);
   list.append(link);
   gallery.append(list);
 
-  link.addEventListener("click", (event) => {
+  gallery.addEventListener("click", selectImage);
+
+  function selectImage(event) {
     event.preventDefault();
-  });
+    if (event.target.nodeName !== "IMG") {
+      return;
+    }
+    const selectedImage = basicLightbox.create(
+      `
+		<img width="1112" height="640" src="${event.target.dataset.source}">
+	`
+    );
+    selectedImage.show();
+  }
 });
