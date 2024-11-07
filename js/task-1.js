@@ -66,36 +66,31 @@ const images = [
 
 const gallery = document.querySelector(".gallery");
 
-images.forEach(({ preview, original, description }) => {
-  const list = document.createElement("li");
-  list.classList.add("gallery-item");
+gallery.insertAdjacentHTML("beforeend", createMarkup(images));
+gallery.addEventListener("click", selectImage);
 
-  const link = document.createElement("a");
-  link.classList.add("gallery-link");
-  link.href = original;
+function createMarkup(arr) {
+  return arr
+    .map(
+      ({ preview, original, description }) => `
+    <li class="gallery-item">
+    <a class="gallery-link" href="${original}">
+    <img class="gallery-image" src="${preview}" alt="${description}" data-source="${original}"/></a></li>
+    `
+    )
+    .join("");
+}
 
-  const img = document.createElement("img");
-  img.classList.add("gallery-image");
-  img.src = preview;
-  img.alt = description;
-  img.dataset.source = original;
-
-  link.append(img);
-  list.append(link);
-  gallery.append(list);
-
-  gallery.addEventListener("click", selectImage);
-
-  function selectImage(event) {
-    event.preventDefault();
-    if (event.target.nodeName !== "IMG") {
-      return;
-    }
-    const selectedImage = basicLightbox.create(
-      `
-		<img width="1112" height="640" src="${event.target.dataset.source}">
-	`
-    );
-    selectedImage.show();
+function selectImage(event) {
+  event.preventDefault();
+  if (!event.target.classList.contains("gallery-image")) {
+    return;
   }
-});
+  const selectedImage = basicLightbox.create(
+    `
+    <div class="modal"><img width="1112" height="640" src="${event.target.dataset.source}"></div>
+		
+	`
+  );
+  selectedImage.show();
+}
