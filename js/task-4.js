@@ -121,3 +121,226 @@
 //* Збільшує значення лічильника на 1 при натисканні на кнопку +1.
 //* Зменшує значення лічильника на 1 при натисканні на кнопку -1.
 //* Показує поточне значення лічильника в елементі <span id="value"
+
+//* При натисканні на кнопку "SHOW ME", потрібно в консоль
+//* вивести значення, яке будемо вводити в інпут.
+
+// const inputText = document.querySelector("#alertInput");
+// const inputButton = document.querySelector("#alertButton");
+
+// inputButton.addEventListener("click", handleBtn);
+
+// function handleBtn(event) {
+//   console.log(inputText.value);
+// }
+
+//* При натисканні на кнопку "Приховати" потрібно введені користувачем
+//* символи в інпут відображати у вигляді крапок замість звичайного
+//* тексту, а також змінити назву кнопки на "Показати", при повторному
+//* натисканні знову будемо відображати символи, а назва кнопки зміниться
+//* на "Приховати".
+
+// const input = document.querySelector("#passwordInput");
+// const button = document.querySelector("#passwordButton");
+
+// button.addEventListener("click", handleButton);
+
+// function handleButton(event) {
+//   if (input.type === "text") {
+//     input.type = "password";
+//     button.textContent = "Показати";
+//   } else {
+//     input.type = "text";
+//     button.textContent = "Приховати";
+//   }
+// }
+
+//   console.dir(input); // type: 'text'
+// потрібно замінити на type: password - тест прихований
+
+//* Кнопка "Зменшити" повинна зменшувати квадрат на 10 пікселів.
+//* Кнопка "Збільшити" повинна збільшувати квадрат на 10 пікселів.
+
+// const box = document.querySelector("#box");
+// const decreaseBtn = document.querySelector("#decrease");
+// const increaseBtn = document.querySelector("#increase");
+
+// decreaseBtn.addEventListener("click", onClickDecrease);
+// increaseBtn.addEventListener("click", onClickIncrease);
+
+// console.dir(box);
+
+// function onClickDecrease() {
+//   box.style.width = `${box.offsetWidth - 10}px`;
+//   box.style.height = `${box.offsetHeight - 10}px`;
+// }
+
+// function onClickIncrease() {
+//   box.style.width = `${box.offsetWidth + 10}px`;
+//   box.style.height = `${box.offsetHeight + 10}px`;
+// }
+
+// При кліку на кнопку "Подвоїти" збільшувати значення в кожному
+// елементі списку в два рази.
+
+// const list = document.querySelectorAll(".listItem");
+// const button = document.querySelector("#double");
+
+// button.addEventListener("click", createMarkup);
+
+// function createMarkup(event) {
+//   list.forEach((item) => (item.textContent = item.textContent * 2));
+// }
+
+// При кліку на кнопку "Filter" потрібно видалити з списку позначені елементи.
+
+// const checkboxForm = document.querySelector(".checkboxForm");
+// const checkboxWrapper = document.querySelectorAll(".checkboxWrapper");
+
+// checkboxForm.addEventListener("submit", onformSubmit);
+
+// function onformSubmit(event) {
+//   event.preventDefault();
+//   const filterList = [...checkboxWrapper].filter(
+//     (item) => item.lastElementChild.checked
+//   );
+//   filterList.forEach((item) => item.remove());
+// }
+
+// Наведено список людей. Зроби можливість фільтрації (пошуку) за ім'ям або за прізвищем.
+
+// const input = document.querySelector(".contactsFilter");
+// const container = document.querySelector(".contact");
+// const list = [...container.children];
+// input.addEventListener("input", handleInput);
+
+// function handleInput(event) {
+//   const value = input.value.toLowerCase();
+//   console.log(value);
+//   const filtredItems = list.filter((item) =>
+//     item.textContent.toLowerCase().includes(value)
+//   );
+//   container.innerHTML = "";
+//   container.append(...filtredItems);
+// }
+
+// Є масив об'єктів з популярними фільмами і форма пошуку за назвою фільму.
+// 1. Зроби так, щоб при першому завантаженні сторінки користувач
+// бачив весь перелік фільмів (назву, рік виробництва, рейтинг і країну виробник).
+// Для рендеру розмітки використовуємо шаблонні рядки та метод insertAdjacentHTML.
+// 2. Реалізуй пошук потрібного фільму за назвою. При кліку на кнопку "Пошук" у
+// списку залишаються тільки ті фільми, котрі мають повне або часткове співпадіння
+// за назвою фільму.
+
+// const searchForm = document.querySelector("#searchForm");
+// const movieList = document.querySelector("#movieList");
+// // searchForm.addEventListener("submit");
+// movieList.insertAdjacentHTML("beforeend", createMarkup);
+
+// const createMarkup = popularMovies
+//   .map(
+//     ({ title, year, rating, country }) => `<li>
+//   <p>${title}</p>
+//   <p>${year}</p>
+//   <p>${rating}</p>
+//   <p>${country}</p>
+// </li>`
+//   )
+//   .join("");
+
+// searchForm.addEventListener("submit", onSubmit);
+// function onSubmit(event) {
+//   event.preventDefault();
+//   const value = event.currentTarget.ser;
+// }
+
+// const popularMovies = [
+//   {
+//     title: "Avengers: Endgame",
+//     year: 2019,
+//     rating: 8.4,
+//     country: "USA",
+//   },
+//   {
+//     title: "Parasite",
+//     year: 2019,
+//     rating: 8.6,
+//     country: "South Korea",
+//   },
+//   {
+//     title: "Joker",
+//     year: 2019,
+//     rating: 8.5,
+//     country: "USA",
+//   },
+//   {
+//     title: "Spider-Man: Into the Spider-Verse",
+//     year: 2018,
+//     rating: 8.4,
+//     country: "USA",
+//   },
+//   {
+//     title: "The Irishman",
+//     year: 2019,
+//     rating: 7.9,
+//     country: "USA",
+//   },
+//   {
+//     title: "Knives Out",
+//     year: 2019,
+//     rating: 7.9,
+//     country: "USA",
+//   },
+//   {
+//     title: "Black Panther",
+//     year: 2018,
+//     rating: 7.3,
+//     country: "USA",
+//   },
+//   {
+//     title: "Mad Max: Fury Road",
+//     year: 2015,
+//     rating: 8.1,
+//     country: "Australia",
+//   },
+// ];
+
+// const form = document.querySelector(`#searchForm`);
+// const container = document.querySelector(`#movieList`);
+
+// const createMarkup = popularMovies
+//   .map(
+//     (movi) =>
+//       `<li>
+//     <p>Назва фільму ${movi.title} </p>
+//     <p>Рік виробництва ${movi.year}</p>
+//     <p>Рейтинг ${movi.rating} </p>
+//     <p>Країна ${movi.country} </p>
+// </li>`
+//   )
+//   .join("");
+// container.insertAdjacentHTML("beforeend", createMarkup);
+
+// form.addEventListener(`submit`, onSubmit);
+// function onSubmit(event) {
+//   event.preventDefault();
+//   const value = event.currentTarget.searchInput.value.toLowerCase();
+//   console.log(value);
+//   const fulterMovis = popularMovies.filter((movi) =>
+//     movi.title.toLocaleLowerCase().includes(value)
+//   );
+//   container.innerHTML = "";
+
+//   const createMarkup = fulterMovis
+//     .map(
+//       (movi) =>
+//         `<li>
+//         <p>Назва фільму ${movi.title} </p>
+//         <p>Рік виробництва ${movi.year}</p>
+//         <p>Рейтинг ${movi.rating} </p>
+//         <p>Країна ${movi.country} </p>
+//     </li>`
+//     )
+//     .join("");
+//   container.insertAdjacentHTML("beforeend", createMarkup);
+// }
