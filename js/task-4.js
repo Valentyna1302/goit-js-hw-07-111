@@ -180,8 +180,7 @@
 //   box.style.height = `${box.offsetHeight + 10}px`;
 // }
 
-// При кліку на кнопку "Подвоїти" збільшувати значення в кожному
-// елементі списку в два рази.
+//* При кліку на кнопку "Подвоїти" збільшувати значення в кожному елементі списку в два рази.
 
 // const list = document.querySelectorAll(".listItem");
 // const button = document.querySelector("#double");
@@ -192,7 +191,7 @@
 //   list.forEach((item) => (item.textContent = item.textContent * 2));
 // }
 
-// При кліку на кнопку "Filter" потрібно видалити з списку позначені елементи.
+//* При кліку на кнопку "Filter" потрібно видалити з списку позначені елементи.
 
 // const checkboxForm = document.querySelector(".checkboxForm");
 // const checkboxWrapper = document.querySelectorAll(".checkboxWrapper");
@@ -207,7 +206,7 @@
 //   filterList.forEach((item) => item.remove());
 // }
 
-// Наведено список людей. Зроби можливість фільтрації (пошуку) за ім'ям або за прізвищем.
+//* Наведено список людей. Зроби можливість фільтрації (пошуку) за ім'ям або за прізвищем.
 
 // const input = document.querySelector(".contactsFilter");
 // const container = document.querySelector(".contact");
@@ -224,35 +223,13 @@
 //   container.append(...filtredItems);
 // }
 
-// Є масив об'єктів з популярними фільмами і форма пошуку за назвою фільму.
+//* Є масив об'єктів з популярними фільмами і форма пошуку за назвою фільму.
 // 1. Зроби так, щоб при першому завантаженні сторінки користувач
 // бачив весь перелік фільмів (назву, рік виробництва, рейтинг і країну виробник).
 // Для рендеру розмітки використовуємо шаблонні рядки та метод insertAdjacentHTML.
 // 2. Реалізуй пошук потрібного фільму за назвою. При кліку на кнопку "Пошук" у
 // списку залишаються тільки ті фільми, котрі мають повне або часткове співпадіння
 // за назвою фільму.
-
-// const searchForm = document.querySelector("#searchForm");
-// const movieList = document.querySelector("#movieList");
-// // searchForm.addEventListener("submit");
-// movieList.insertAdjacentHTML("beforeend", createMarkup);
-
-// const createMarkup = popularMovies
-//   .map(
-//     ({ title, year, rating, country }) => `<li>
-//   <p>${title}</p>
-//   <p>${year}</p>
-//   <p>${rating}</p>
-//   <p>${country}</p>
-// </li>`
-//   )
-//   .join("");
-
-// searchForm.addEventListener("submit", onSubmit);
-// function onSubmit(event) {
-//   event.preventDefault();
-//   const value = event.currentTarget.ser;
-// }
 
 // const popularMovies = [
 //   {
@@ -305,42 +282,79 @@
 //   },
 // ];
 
-// const form = document.querySelector(`#searchForm`);
-// const container = document.querySelector(`#movieList`);
+// const form = document.querySelector("#searchForm");
+// const container = document.querySelector("#movieList");
+// container.insertAdjacentHTML("beforeend", createMarkup(popularMovies));
+// form.addEventListener("submit", filterName);
 
-// const createMarkup = popularMovies
-//   .map(
-//     (movi) =>
-//       `<li>
-//     <p>Назва фільму ${movi.title} </p>
-//     <p>Рік виробництва ${movi.year}</p>
-//     <p>Рейтинг ${movi.rating} </p>
-//     <p>Країна ${movi.country} </p>
+// function createMarkup(movies) {
+//   return movies
+//     .map(
+//       (item) => `<li>
+//   <p>Назва фільму ${item.title}</p>
+//   <p>Рік виробництва ${item.year}</p>
+//   <p>Рейтинг ${item.rating}</p>
+//   <p>Країна виробник ${item.country}</p>
 // </li>`
-//   )
-//   .join("");
-// container.insertAdjacentHTML("beforeend", createMarkup);
+//     )
+//     .join("");
+// }
 
-// form.addEventListener(`submit`, onSubmit);
-// function onSubmit(event) {
+// function filterName(event) {
 //   event.preventDefault();
-//   const value = event.currentTarget.searchInput.value.toLowerCase();
+//   const value = event.currentTarget.searchInput.value.trim().toLowerCase(); // звертаємось за імʼям інпуту  name="searchInput"
 //   console.log(value);
-//   const fulterMovis = popularMovies.filter((movi) =>
-//     movi.title.toLocaleLowerCase().includes(value)
+//   const filtredMovies = popularMovies.filter((item) =>
+//     item.title.toLowerCase().includes(value)
 //   );
 //   container.innerHTML = "";
 
-//   const createMarkup = fulterMovis
+//   container.insertAdjacentHTML("beforeend", createMarkup(filtredMovies));
+// }
+
+// Якщо ви хочете зробити код динамічним і незалежним від конкретного масиву, можна передати масив як аргумент у функцію фільтрації та рендеру. Таким чином, код працюватиме з будь-яким масивом, переданим у функцію.
+
+// // HTML-елементи
+// const form = document.querySelector("#searchForm");
+// const container = document.querySelector("#movieList");
+
+// // Ініціалізація: використовуємо будь-який масив, наприклад, popularMovies
+// renderMovies(popularMovies);
+
+// // Слухач для форми
+// form.addEventListener("submit", (event) => filterMovies(event, popularMovies));
+
+// // Функція створення розмітки
+// function createMarkup(movies) {
+//   return movies
 //     .map(
-//       (movi) =>
-//         `<li>
-//         <p>Назва фільму ${movi.title} </p>
-//         <p>Рік виробництва ${movi.year}</p>
-//         <p>Рейтинг ${movi.rating} </p>
-//         <p>Країна ${movi.country} </p>
-//     </li>`
+//       (item) => `<li>
+//         <p>Назва фільму: ${item.title}</p>
+//         <p>Рік виробництва: ${item.year}</p>
+//         <p>Рейтинг: ${item.rating}</p>
+//         <p>Країна виробник: ${item.country}</p>
+//       </li>`
 //     )
 //     .join("");
-//   container.insertAdjacentHTML("beforeend", createMarkup);
+// }
+
+// // Функція рендеру
+// function renderMovies(movies) {
+//   container.innerHTML = createMarkup(movies);
+// }
+
+// // Функція фільтрації
+// function filterMovies(event, movieArray) {
+//   event.preventDefault();
+
+//   const searchValue = event.currentTarget.searchInput.value.trim().toLowerCase();
+//   const searchField = event.currentTarget.searchField.value;
+
+//   // Фільтруємо динамічний масив
+//   const filteredMovies = movieArray.filter((item) =>
+//     item[searchField].toString().toLowerCase().includes(searchValue)
+//   );
+
+//   // Рендеримо відфільтрований список
+//   renderMovies(filteredMovies);
 // }
