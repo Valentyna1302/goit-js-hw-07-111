@@ -41,4 +41,3 @@ function createMarkup(arr) {
     .join("");
 }
 
-// TextDecoderStream
