@@ -60,7 +60,7 @@
 //Зробимо так, щоб при перезавантаженні сторінки зберігалося введене повідомлення. Для цього використовуємо локальне сховище, щоб зберегти поточне значення текстового поля під час введення.
 
 // const form = document.querySelector(".feedback-form");
-// const localStorageKey = "goit-example-message";
+// const localStorageKey = "example";
 
 // form.addEventListener("input", (evt) => {
 //   localStorage.setItem(localStorageKey, evt.target.value); // використовуємо властивість target для запису поточного значення поля в локальне сховище.
