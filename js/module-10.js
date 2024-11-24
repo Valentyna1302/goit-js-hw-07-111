@@ -145,27 +145,317 @@
 
 // console.log(promise); // Об'єкт промісу
 
+//* Метод then() приймає два аргументи — дві callback функції, які будуть викликані, коли проміс змінить свій стан. Результат промісу — це значення або помилка, яку функції отримають як аргументи.
+//* onResolve(value) — 1-й аргумент методу then(), колбек-функція, яка буде викликана у разі успішного виконання промісу та отримає його результат як аргумент.
+//* onReject(error) — 2-й аргумент методу then(), колбек-функція, яка буде викликана у разі виконання промісу з помилкою та отримає її як аргумент.
 //* У прикладі нижче callback-функція onResolve буде викликана через дві секунди, якщо проміс успішно виконається, а onReject буде викликана через дві секунди у тому разі, якщо проміс виконається з помилкою.
+//* Функція, яка передається першим аргументом у метод then, отримує значення, з яким виконався проміс. Якщо проміс завершився з помилкою, то ця функція не викликається. Помилку можна обробити у колбек-функції, передаючи її другим аргументом у метод then.
 
-const isSuccess = true;
+// const isSuccess = true;
 
 // Create promise
-const promise = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    if (isSuccess) {
-      resolve("Success! Value passed to resolve function");
-    } else {
-      reject("Error! Error passed to reject function");
-    }
-  }, 2000);
-});
+// const promise = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     if (isSuccess) {
+//       resolve("Success! Value passed to resolve function");
+//     } else {
+//       reject("Error! Error passed to reject function");
+//     }
+//   }, 2000);
+// });
 
 // Registering promise callbacks
-promise.then(
-  (value) => {
-    console.log(value); // "Success! Value passed to resolve function"
-  },
-  (error) => {
-    console.log(error); // "Error! Error passed to reject function"
-  }
-);
+// promise.then(
+//   (value) => {
+//     console.log(value); // "Success! Value passed to resolve function"
+//   },
+//   (error) => {
+//     console.log(error); // "Error! Error passed to reject function"
+//   }
+// );
+
+//* Метод catch()
+//* На практиці в методі then() обробляють тільки успішне виконання промісу. Помилку його виконання обробляють у спеціальному методі catch() для «відловлювання» помилок.
+//* Функція, яка передається аргументом у метод catch, виконається після того, як проміс буде виконано з помилкою. Тобто вона призначена для обробки помилок, які виникають під час виконання промісу.
+
+// const isSuccess = true;
+
+// // Create promise
+// const promise = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     if (isSuccess) {
+//       resolve("Success! Value passed to resolve function");
+//     } else {
+//       reject("Error! Error passed to reject function");
+//     }
+//   }, 2000);
+// });
+
+// // Registering promise callbacks
+// promise
+//   .then((value) => {
+//     console.log(value); // "Success! Value passed to resolve function"
+//   })
+//   .catch((error) => {
+//     console.log(error); // "Error! Error passed to reject function"
+//   });
+
+//* Метод finally()
+//* Цей метод може бути корисним, якщо необхідно виконати код після того, як проміс буде виконаний незалежно від результату (fulfilled або rejected).
+//* Метод finally() дозволяє уникнути дублювання коду в обробниках then() і catch().
+//* Функція, яка передається аргументом у метод finally, не отримує жодних значень або помилок від промісу.
+
+// const isSuccess = true;
+// const isSuccess = false;
+
+// // Create promise
+// const promise = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     if (isSuccess) {
+//       resolve("Success! Value passed to resolve function");
+//     } else {
+//       reject("Error! Error passed to reject function");
+//     }
+//   }, 2000);
+// });
+
+// // Registering promise callbacks
+// promise
+//   .then((value) => console.log(value)) // "Success! Value passed to resolve function"
+//   .catch((error) => console.log(error)) // "Error! Error passed to reject function"
+//   .finally(() => console.log("Promise settled")); // "Promise settled"
+
+//* Ланцюжки промісів
+//* Метод then() видає новий ПРОМІС, значення або статус помилки якого визначається результатом колбек-функції, переданої до методу then. Завдяки цьому можна створювати ланцюжки асинхронної обробки результатів через послідовні виклики методу then.
+
+// const promise = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve(5);
+//   }, 2000);
+// });
+
+// promise
+//   .then((value) => {
+//     console.log(value); // 5
+//     return value * 2;
+//   })
+//   .then((value) => {
+//     console.log(value); // 10
+//     return value * 3;
+//   })
+//   .then((value) => {
+//     console.log(value); // 30
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   })
+//   .finally(() => {
+//     console.log("finally");
+//   });
+
+// const fetchData = new Promise((resolve, reject) => {
+//   const serverResponse = true; // Змінити на false, щоб симулювати не успішну відповідь
+
+//   setTimeout(() => {
+//     if (serverResponse) {
+//       resolve({ data: "Дані з сервера" }); // Успішна відповідь
+//     } else {
+//       reject("Сервер недоступний"); // Помилка сервера
+//     }
+//   }, 2000);
+// });
+
+// fetchData
+//   .then((response) => {
+//     console.log("Отримано:", response.data); // Це відпрацює тільки при успішному виконанні
+//     return response.data.toUpperCase();
+//   })
+//   .then((modifiedData) => {
+//     console.log("Модифіковані дані:", modifiedData); // Виводиться, якщо попередній then успішний
+//   })
+//   .catch((error) => {
+//     console.error("Помилка запиту:", error); // Відпрацює, якщо сервер поверне помилку
+//   })
+//   .finally(() => {
+//     console.log("Запит завершено."); // Виконується завжди
+//   });
+
+//* Промісифікована функція — це функція, яка призначена для виконання асинхронних операцій і повертає проміс у результаті своєї роботи.
+
+// Для початку напишемо код, який поверне з функції проміс. Для цього створюємо в ній проміс через new Promise і повертаємо його.
+
+// const fetchUserFromServer = (username) => {
+//   return new Promise((resolve, reject) => {
+//     // ...
+//   });
+// };
+
+// Отримуємо проміс у зовнішньому коді та додаємо на нього обробники в методах then і catch.
+
+// const fetchUserFromServer = (username) => {
+//   return new Promise((resolve, reject) => {
+//     // ...
+//   });
+// };
+
+// const userPromise = fetchUserFromServer("Mango"); // результатом виклику fetchUserFromServer("Mango") буде проміс
+
+// проміс обробляємо у методах then() i catch()
+// userPromise
+//   .then((user) => console.log(user))
+//   .catch((error) => console.error(error));
+
+// Зазвичай обробники додають на результат виклику функції проміс, не записуючи його в зайву змінну.
+
+// const fetchUserFromServer = (username) => {
+//   return new Promise((resolve, reject) => {
+//     // ...
+//   });
+// };
+
+// fetchUserFromServer("Mango") // результатом виклику fetchUserFromServer("Mango") буде проміс
+//   .then((user) => console.log(user)) // проміс обробляємо в методі then()
+//   .catch((error) => console.error(error)); // проміс обробляємо в методі catch()
+
+// Весь код, пов'язаний із логікою роботи, додаємо всередину функції створення промісу.
+
+// const fetchUserFromServer = (username) => {
+//   return new Promise((resolve, reject) => {
+//     console.log(`Fetching data for ${username}`);
+
+//     setTimeout(() => {
+//       // Change value of isSuccess variable to simulate request status
+//       const isSuccess = true;
+
+//       if (isSuccess) {
+//         resolve("success value"); // значенням параметра resolve буде колбек-функція методу then()
+//       } else {
+//         reject("error"); // значенням параметра reject буде колбек-функція методу catch()
+//       }
+//     }, 2000);
+//   });
+// };
+
+// fetchUserFromServer("Mango")
+//   .then((user) => console.log(user))
+//   .catch((error) => console.error(error));
+
+//* Виконаємо рефакторинг коду функції, яка приймає два колбеки та викликає їх за умовою.
+
+// const makeGreeting = (guestName, onSuccess, onError) => {
+//   if (!guestName) {
+//     onError("Guest name must not be empty");
+//   } else {
+//     onSuccess(`Welcome ${guestName}`);
+//   }
+// };
+
+// makeGreeting(
+//   "Mango",
+//   (greeting) => console.log(greeting),
+//   (error) => console.error(error)
+// );
+
+// Зробимо промісифікацію функції makeGreeting для того, щоб повністю усунути її залежність від зовнішнього коду. Вона повинна просто повертати проміс.
+
+// const makeGreeting = (guestName) => {
+//   return new Promise((resolve, reject) => {
+//     if (!guestName) {
+//       reject("Guest name must not be empty");
+//     } else {
+//       resolve(`Welcome ${guestName}`);
+//     }
+//   });
+// };
+
+// makeGreeting("Mango")
+//   .then((greeting) => console.log(greeting))
+//   .catch((error) => console.error(error));
+
+// А тепер використаємо методи класу Promise, щоб скоротити кількість коду.
+
+// const makeGreeting = (guestName) => {
+//   if (!guestName) {
+//     return Promise.reject("Guest name must not be empty");
+//   } else {
+//     return Promise.resolve(`Welcome ${guestName}`);
+//   }
+// };
+
+// makeGreeting("Mango")
+//   .then((greeting) => console.log(greeting))
+//   .catch((error) => console.error(error));
+
+//* Створення промісів із затримкою
+
+const makePromise = (options) => {
+  // буде створювати і повертати проміси з різною затримкою виконання. ф-ція приймає обʼєкт з властивстями value, delay, shouldResolve
+  // ...
+};
+
+makePromise({
+  value: "Some value", // значення, яке буде значенням проміса
+  delay: 2000, // затримка в мілісекундах, після якої буде виконуватися проміс
+  shouldResolve: true, // булеве значення, що вказує, чи повинен проміс виконатися
+});
+
+// Доповнимо код функції так, щоб вона повертала проміс.
+
+const makePromise = (options) => {
+  return new Promise((resolve, reject) => {
+    // ...
+  });
+};
+
+// Далі зробимо так, щоб проміс виконувався або був відхиленим зі значенням, вказаним у властивості value після затримки в delay мілісекунд. За замовчуванням проміс виконуватиметься успішно, для цього вказуємо значення за замовчуванням true для властивості shouldResolve при деструктуризації.
+
+const makePromise = ({ value, delay, shouldResolve = true }) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve(value);
+      } else {
+        reject(value);
+      }
+    }, delay);
+  });
+};
+
+// Перевіримо роботу функції, створивши кілька промісів з різним часом затримки та значеннями.
+makePromise({ value: "A", delay: 1000 })
+  .then((value) => console.log(value)) // "A"
+  .catch((error) => console.log(error));
+
+makePromise({ value: "B", delay: 3000 })
+  .then((value) => console.log(value)) // "B"
+  .catch((error) => console.log(error));
+
+makePromise({ value: "C", delay: 2000, shouldResolve: false })
+  .then((value) => console.log(value))
+  .catch((error) => console.log(error)); // "C"
+
+// Отже, це просто перевикористана функція, яка містить у собі код створення промісу із затримкою, щоб не писати цей код щоразу, коли потрібно створити проміс. Без функції цей же код виглядав би ось так:
+
+// new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve('Fulfilled A');
+//   }, 1000);
+// })
+//   .then(value => console.log(value))
+//   .catch(error => console.log(error));
+
+// new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve('Fulfilled B');
+//   }, 3000);
+// })
+//   .then(value => console.log(value))
+//   .catch(error => console.log(error));
+
+// new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject('Rejected C');
+//   }, 2000);
+// })
+//   .then(value => console.log(value))
+//   .catch(error => console.log(error)); // "Rejected C"
